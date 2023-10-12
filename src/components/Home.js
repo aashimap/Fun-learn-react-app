@@ -2,11 +2,15 @@
 import classes from "./Home.module.css";
 import LoginForm from "./LoginForm";
 import CreateAccount from "./CreateAccount";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const [isLoginFormShown, setIsLoginFormShown] = useState(false);
   const [isCreateAccountShown, setIsCreateAccountShown] = useState(false);
+  const userLoggedIn = useSelector((state) => state.user.userLoggedIn);
 
   const showLoginForm = () => {
     setIsLoginFormShown(true);
@@ -22,6 +26,12 @@ const Home = () => {
     setIsLoginFormShown(false);
     setIsCreateAccountShown(false);
   };
+
+  useEffect(() => {
+    if (userLoggedIn) {
+      navigate("/activities");
+    }
+  }, [navigate, userLoggedIn]);
   return (
     <>
       <div className={classes.container}>
