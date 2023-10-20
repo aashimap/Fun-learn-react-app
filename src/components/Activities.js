@@ -70,17 +70,17 @@ const Activities = () => {
       <div className="container">
         <div className="header">
           <div>{isAdmin ? "Admin Dashboard" : "Fun Learn - Activities"}</div>
-          <div>
-            <button className="add-activity" onClick={showAddActivity}>
-              Add Activity
-            </button>
-            <button className="delete" onClick={showDeleteActivity}>
-              Delete Activity
-            </button>
-            <button className="user-icon" onClick={handleProfile}>
-              👤
-            </button>
-          </div>
+
+          <button className="add-activity" onClick={showAddActivity}>
+            Add Activity
+          </button>
+          <button className="delete" onClick={showDeleteActivity}>
+            Delete Activity
+          </button>
+          <button className="user-icon" onClick={handleProfile}>
+            👤
+          </button>
+
           {isVisible && <UserProfileDropdown />}
         </div>
         <div className="activities-container">
