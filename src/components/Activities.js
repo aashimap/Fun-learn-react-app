@@ -19,13 +19,6 @@ const Activities = () => {
   const isAdmin = useSelector((state) => state.user.user.isAdmin);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!userLoggedIn) {
-      navigate("/");
-    }
-    fetchActivities();
-  }, [userLoggedIn, navigate]);
-
   const fetchActivities = async () => {
     try {
       const response = await fetch("http://localhost:8080/activities/fetch", {
@@ -62,6 +55,13 @@ const Activities = () => {
     setDeleteShow(!deleteShow);
   };
 
+  useEffect(() => {
+    if (!userLoggedIn) {
+      navigate("/");
+    }
+    fetchActivities();
+  }, [userLoggedIn, navigate, fetchActivities]);
+
   return (
     <>
       <div className="container">
@@ -83,7 +83,7 @@ const Activities = () => {
         <div className="activities-container">
           {activities.map((activity, index) => (
             <div key={activity.id} className="activity-item">
-              <img src={activity.image} alt={`Image ${index + 1}`} />
+              <img src={activity.image} alt="" />
               <p className="activity-label">{activity.name}</p>
             </div>
           ))}
