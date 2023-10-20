@@ -15,14 +15,17 @@ const AdminDashboardAdd = (props) => {
       if (!image) {
         alert("Please select an Image File");
       }
-      const response = await fetch("http://localhost:8080/activities/add", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
+      const response = await fetch(
+        "https://fun-learn-node.onrender.com/activities/add",
+        {
+          method: "POST",
+          body: formData,
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
 
       if (!response) {
         console.error("No response received");

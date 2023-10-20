@@ -69,7 +69,7 @@ export const signUp = (userData) => async (dispatch) => {
   try {
     dispatch(signUpStart());
 
-    const response = await fetch("http://localhost:8080/signup", {
+    const response = await fetch("https://fun-learn-node.onrender.com/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -103,7 +103,7 @@ export const signIn = (userData) => async (dispatch) => {
   try {
     dispatch(loginStart());
 
-    const response = await fetch("http://localhost:8080/signin", {
+    const response = await fetch("https://fun-learn-node.onrender.com/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -128,23 +128,6 @@ export const signIn = (userData) => async (dispatch) => {
     dispatch(loginFailure(error.message || "An error occurred"));
   }
 };
-
-// export const hiddenContent = () => async () => {
-//   const response = await fetch(
-//     "http://localhost:8080/activities/hiddencontent",
-//     {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   );
-
-//   if (response.ok) {
-//     const responseData = await response.json();
-//     console.log(responseData);
-//   }
-// };
 
 export const {
   signUpStart,
