@@ -51,7 +51,7 @@ const Home = () => {
         <div className={classes.imagecontainer}>
           <img src="../images/Home.jpeg" alt="Background" />
         </div>
-        <p className={classes.text}>A Creative Learning For Your Little Ones</p>
+        <p className={classes.text}>A Creative Learning For Little Ones</p>
       </div>
     </>
   );
