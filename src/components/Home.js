@@ -49,8 +49,9 @@ const Home = () => {
           <div className={classes.main}></div>
         </div>
         <div className={classes.imagecontainer}>
-          <img src="../images/Home.jpeg" alt="Background Image" />
+          <img src="../images/Home.jpeg" alt="Background" />
         </div>
+        <p className={classes.text}>A Creative Learning For Your Little Ones</p>
       </div>
     </>
   );

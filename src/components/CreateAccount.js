@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signUp, setUserCreated } from "../store/userSlice";
-import { useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import "./ModalContainer.css";
 
@@ -10,9 +9,9 @@ const CreateAccount = (props) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [inputBorders, setInputBorder] = useState({
-    email: "gray",
-    username: "gray",
-    password: "gray",
+    email: "blue",
+    username: "blue",
+    password: "blue",
   });
   const [inputTouched, setInputTouched] = useState({
     email: false,
@@ -21,7 +20,6 @@ const CreateAccount = (props) => {
   });
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const loading = useSelector((state) => state.user.loading);
   const userCreated = useSelector((state) => state.user.userCreated);
@@ -60,9 +58,8 @@ const CreateAccount = (props) => {
   useEffect(() => {
     if (userCreated) {
       dispatch(setUserCreated(false));
-      navigate("/activities");
     }
-  }, [userCreated, navigate]);
+  }, [userCreated, dispatch]);
 
   return (
     <Modal>

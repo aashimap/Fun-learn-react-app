@@ -5,6 +5,7 @@ import { signIn } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import Modal from "../UI/Modal";
 import "./ModalContainer.css";
+import "./Home.module.css";
 
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");

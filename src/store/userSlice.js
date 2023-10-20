@@ -10,6 +10,7 @@ const initialState = {
   authToken: localStorage.getItem("authToken") || null,
   userCreated: false,
   userLoggedIn: false,
+  isAdmin: false,
 };
 
 const userSlice = createSlice({
@@ -42,6 +43,7 @@ const userSlice = createSlice({
     loginSuccess: (state, action) => {
       state.loading = false;
       state.user = action.payload;
+      state.isAdmin = action.payload.role === "admin";
       console.log(state.user);
     },
     setUserLoggedIn: (state, action) => {
@@ -75,14 +77,22 @@ export const signUp = (userData) => async (dispatch) => {
       body: JSON.stringify(userData),
     });
 
+    console.log(response);
+
     if (response.ok) {
       const responseData = await response.json();
       console.log(responseData);
+      const authToken = responseData.accessToken;
+      const decodedtoken = jwt_decode(authToken);
+      localStorage.setItem("decodedtoken", JSON.stringify(decodedtoken));
+      dispatch(setAuthToken(authToken));
+      dispatch(loginSuccess(responseData));
       dispatch(signUpSuccess(responseData));
       dispatch(setUserCreated(true));
       dispatch(setUserLoggedIn(true));
     }
   } catch (error) {
+    console.log("Error during sign-up");
     dispatch(signUpFailure(error.message));
   }
 };
@@ -101,11 +111,13 @@ export const signIn = (userData) => async (dispatch) => {
       body: JSON.stringify(userData),
     });
 
+    console.log(response);
+
     if (response.ok) {
       const responseData = await response.json();
       const authToken = responseData.accessToken;
-      const decode_token = jwt_decode(authToken);
-      localStorage.setItem("token", JSON.stringify(decode_token));
+      const decodedtoken = jwt_decode(authToken);
+      localStorage.setItem("decodedtoken", JSON.stringify(decodedtoken));
       dispatch(setAuthToken(authToken));
       dispatch(loginSuccess(responseData));
       dispatch(setUserLoggedIn(true));
@@ -116,6 +128,24 @@ export const signIn = (userData) => async (dispatch) => {
     dispatch(loginFailure(error.message || "An error occurred"));
   }
 };
+
+// export const hiddenContent = () => async () => {
+//   const response = await fetch(
+//     "http://localhost:8080/activities/hiddencontent",
+//     {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     }
+//   );
+
+//   if (response.ok) {
+//     const responseData = await response.json();
+//     console.log(responseData);
+//   }
+// };
+
 export const {
   signUpStart,
   signUpSuccess,
@@ -129,6 +159,7 @@ export const {
   loginFailure,
   setUserLoggedIn,
   userLoggedIn,
+  isAdmin,
 } = userSlice.actions;
 
 export default userSlice.reducer;

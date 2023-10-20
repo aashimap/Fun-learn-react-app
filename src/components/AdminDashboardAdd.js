@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./AdminDashboard.css";
+import "./AdminDashboardAdd.css";
 import Modal from "../UI/Modal";
 
-const AdminDashboard = (props) => {
+const AdminDashboardAdd = (props) => {
   const [newActivity, setNewActivity] = useState("");
   const [image, setImage] = useState(null);
   const authToken = localStorage.getItem("authToken");
@@ -74,4 +74,4 @@ const AdminDashboard = (props) => {
   );
 };
 
-export default AdminDashboard;
+export default AdminDashboardAdd;
