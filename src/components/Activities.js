@@ -19,30 +19,6 @@ const Activities = () => {
   const isAdmin = useSelector((state) => state.user.user.isAdmin);
   const navigate = useNavigate();
 
-  const fetchActivities = async () => {
-    try {
-      const response = await fetch("http://localhost:8080/activities/fetch", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        const errorMessage = await response.text();
-        console.error("ERROR:", errorMessage);
-        alert(`ERROR: ${errorMessage}`);
-        return;
-      }
-
-      const data = await response.json();
-      setActivities(data.activities);
-    } catch (error) {
-      console.error("Caught an error:", error);
-      alert("Error fetching activity. Please try again.");
-    }
-  };
-
   const handleProfile = () => {
     setIsVisible(!isVisible);
   };
@@ -56,11 +32,35 @@ const Activities = () => {
   };
 
   useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/activities/fetch", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorMessage = await response.text();
+          console.error("ERROR:", errorMessage);
+          alert(`ERROR: ${errorMessage}`);
+          return;
+        }
+
+        const data = await response.json();
+        setActivities(data.activities);
+      } catch (error) {
+        console.error("Caught an error:", error);
+        alert("Error fetching activity. Please try again.");
+      }
+    };
+
     if (!userLoggedIn) {
       navigate("/");
     }
     fetchActivities();
-  }, [userLoggedIn, navigate, fetchActivities]);
+  }, [userLoggedIn, navigate]);
 
   return (
     <>
