@@ -60,7 +60,7 @@ const Activities = () => {
       navigate("/");
     }
     fetchActivities();
-  }, [userLoggedIn, navigate]);
+  }, [userLoggedIn, navigate, authToken]);
 
   return (
     <>
