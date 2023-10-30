@@ -1,11 +1,16 @@
-.container {
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-.container::before {
+.main-container::before {
   content: "";
   position: absolute;
   top: 0;
@@ -20,21 +25,33 @@
   -webkit-filter: blur(5px);
   z-index: -1;
 }
-.header {
+
+.main-header {
+  position: fixed;
+  top: 0;
+  background-color: #4a4cab;
+  padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #4a4cab;
-  color: #fff;
-  padding: 10px;
+  width: 100%;
+  height: 70px;
+  z-index: 1000;
 }
 
-.header div {
-  font-size: 24px;
+.main-header h1 {
+  font-size: 50px;
+  margin: 0;
+  color: #fff;
+  font-family: "Arial", sans-serif;
   font-weight: bold;
 }
+.main-header .actions {
+  display: flex;
+  align-items: center;
+}
 
-.header button {
+.main-header button {
   background-color: #ca9b36;
   color: #fff;
   border: none;
@@ -43,17 +60,18 @@
   cursor: pointer;
   margin-left: 10px;
   border-radius: 2em;
+  transition: background-color 0.3s;
 }
 
-.header .add-activity {
+.main-header button.add {
   background-color: #4caf50;
 }
 
-.header .delete {
+.main-header button.delete {
   background-color: #e74c3c;
 }
 
-.header .user-icon {
+.main-header button.user-icon {
   cursor: pointer;
   border-radius: 50%;
   font-size: 15px;
@@ -62,10 +80,10 @@
   padding: 10px;
   border: none;
   margin-left: 10px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s;
 }
 
-.user-icon:hover {
+.main-header button.user-icon:hover {
   background-color: #45a049;
   transform: scale(1.1);
 }
@@ -109,8 +127,9 @@
 }
 
 .activity-item {
-  margin: 10px;
   text-align: center;
+  width: calc(33.33% - 20px);
+  margin-bottom: 20px;
 }
 
 .activity-item img {

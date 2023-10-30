@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUp, setUserCreated } from "../store/userSlice";
-import Modal from "../UI/Modal";
-import "./ModalContainer.css";
+import { signUp } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
+import "./Home.css";
 
 const CreateAccount = (props) => {
   const [username, setUsername] = useState("");
@@ -20,9 +24,10 @@ const CreateAccount = (props) => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const loading = useSelector((state) => state.user.loading);
-  const userCreated = useSelector((state) => state.user.userCreated);
+  const authToken = useSelector((state) => state.user.authToken);
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validateUsername = (username) => username.length >= 3;
@@ -56,70 +61,84 @@ const CreateAccount = (props) => {
   };
 
   useEffect(() => {
-    if (userCreated) {
-      dispatch(setUserCreated(false));
+    if (authToken !== null) {
+      navigate("/activities");
+    } else {
+      navigate("/");
     }
-  }, [userCreated, dispatch]);
+  }, [authToken, navigate, dispatch]);
 
   return (
-    <Modal>
-      <div className="modal-container">
-        <h1>Create Account</h1>
-        <div>
-          <label>Email:</label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{
-              borderColor: inputTouched.email ? inputBorders.email : "gray",
-            }}
-          />
-          {inputTouched.email && !validateEmail(email) && (
-            <p style={{ color: "red" }}>Please enter a valid email.</p>
-          )}
-        </div>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={{
-              borderColor: inputTouched.username
-                ? inputBorders.username
-                : "gray",
-            }}
-          />
-          {inputTouched.username && !validateUsername(username) && (
-            <p style={{ color: "red" }}>
-              Username must be at least 3 characters.
-            </p>
-          )}
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{
-              borderColor: inputTouched.password
-                ? inputBorders.password
-                : "gray",
-            }}
-          />
-          {inputTouched.password && !validatePassword(password) && (
-            <p style={{ color: "red" }}>
-              Password must be at least 6 characters.
-            </p>
-          )}
-        </div>
-        <button onClick={handleCreate} disabled={loading}>
-          {loading ? "Creating..." : "Create"}
-        </button>
-        <button onClick={props.onCancel}>Cancel</button>
-      </div>
+    <Modal show={true} onHide={props.onCancel} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Create Account</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Form.Group className="mb-3" controlId="formEmail">
+            <Form.Label>Email:</Form.Label>
+            <Form.Control
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={{
+                borderColor: inputTouched.email ? inputBorders.email : "gray",
+              }}
+            />
+            {inputTouched.email && !validateEmail(email) && (
+              <Form.Text style={{ color: "red" }}>
+                Please enter a valid email.
+              </Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formUsername">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{
+                borderColor: inputTouched.username
+                  ? inputBorders.username
+                  : "gray",
+              }}
+            />
+            {inputTouched.username && !validateUsername(username) && (
+              <Form.Text style={{ color: "red" }}>
+                Username must be at least 3 characters.
+              </Form.Text>
+            )}
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formPassword">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{
+                borderColor: inputTouched.password
+                  ? inputBorders.password
+                  : "gray",
+              }}
+            />
+            {inputTouched.password && !validatePassword(password) && (
+              <Form.Text style={{ color: "red" }}>
+                Password must be at least 6 characters.
+              </Form.Text>
+            )}
+          </Form.Group>
+          <Button variant="primary" onClick={handleCreate} disabled={loading}>
+            {loading ? (
+              <>
+                <Spinner animation="border" size="sm" />
+                {" Creating..."}
+              </>
+            ) : (
+              "Create"
+            )}
+          </Button>
+        </Form>
+      </Modal.Body>
     </Modal>
   );
 };

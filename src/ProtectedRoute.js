@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ element, path }) => {
-  const isAuthenticated = localStorage.getItem("decodedtoken");
+  const isAuthenticated = localStorage.getItem("authToken");
 
   if (!isAuthenticated && path !== "/") {
     return <Navigate to="/" />;
