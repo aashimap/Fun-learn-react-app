@@ -53,8 +53,8 @@ export const signUp = (userData) => async (dispatch) => {
     dispatch(loginStart());
 
     const response = await fetch(
-      "http://localhost:8080/signup",
-      //"https://fun-learn-node.onrender.com/signup",
+      //"http://localhost:8080/signup",
+      "https://fun-learn-node.onrender.com/signup",
       {
         method: "POST",
         headers: {
@@ -83,8 +83,8 @@ export const signIn = (userData) => async (dispatch) => {
     dispatch(loginStart());
 
     const response = await fetch(
-      "http://localhost:8080/signin",
-      //"https://fun-learn-node.onrender.com/signin",
+      //"http://localhost:8080/signin",
+      "https://fun-learn-node.onrender.com/signin",
       {
         method: "POST",
         headers: {
@@ -116,7 +116,8 @@ export const googleSignIn = () => async (dispatch) => {
     // Open Google Sign-In popup
     await new Promise((resolve, reject) => {
       const googleSignInPopup = window.open(
-        "http://localhost:8080/auth/google",
+        //"http://localhost:8080/auth/google",
+        "https://fun-learn-node.onrender.com/auth/google",
         "GoogleSignIn",
         "width=600,height=600"
       );
