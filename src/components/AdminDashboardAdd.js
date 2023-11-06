@@ -18,8 +18,8 @@ const AdminDashboardAdd = (props) => {
       }
 
       const response = await fetch(
-        //"http://localhost:8080/activities/add",//
-        "https://fun-learn-node.onrender.com/activities/add",
+        "http://localhost:8080/activities/add",
+        //"https://fun-learn-node.onrender.com/activities/add",
         {
           method: "POST",
           body: formData,

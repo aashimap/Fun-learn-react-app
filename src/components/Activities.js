@@ -10,6 +10,7 @@ import AdminDashboardDelete from "./AdminDashboardDelete";
 import jwt_decode from "jwt-decode";
 
 const Activities = () => {
+  console.log("ACTIVIITIES");
   const authToken = localStorage.getItem("authToken");
   const decodedToken = jwt_decode(authToken);
   const [activities, setActivities] = useState([]);
@@ -49,8 +50,8 @@ const Activities = () => {
       try {
         if (authToken) {
           const response = await fetch(
-            //http://localhost:8080/activities/fetch,//
-            "https://fun-learn-node.onrender.com/activities/fetch",
+            " http://localhost:8080/activities/fetch",
+            //"https://fun-learn-node.onrender.com/activities/fetch",
             {
               method: "GET",
               headers: {

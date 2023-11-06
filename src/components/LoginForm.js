@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signIn } from "../store/userSlice";
+import { signIn, googleSignIn } from "../store/userSlice";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Modal from "react-bootstrap/Modal";
 import "./Home.css";
+import { GoogleLogin } from "react-google-login";
+import { gapi } from "gapi-script";
 
 const LoginForm = (props) => {
   const [email, setEmail] = useState("");
@@ -19,6 +21,8 @@ const LoginForm = (props) => {
   const loading = useSelector((state) => state.user.loading);
   const authToken = localStorage.getItem("authToken");
 
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   const handleLogin = () => {
     const userData = {
       email,
@@ -28,12 +32,25 @@ const LoginForm = (props) => {
     dispatch(signIn(userData));
   };
 
+  const handleGoogleLoginSuccess = (response) => {
+    console.log("Google login success:", response);
+    dispatch(googleSignIn());
+  };
+
+  const handleGoogleLoginFailure = (error) => {
+    console.error("Google login error:", error);
+  };
+
   const handleCancel = () => {
     setShowModal(false);
     if (props.onCancel) {
       props.onCancel();
     }
   };
+
+  gapi.load("client:auth2", () => {
+    gapi.client.init({ clientId: { clientId }, plugin_name: "chat" });
+  });
 
   useEffect(() => {
     console.log("authToken:", authToken);
@@ -80,9 +97,22 @@ const LoginForm = (props) => {
               {responseData.error && (
                 <p className="text-danger">{responseData.error}</p>
               )}
-              <Button variant="primary" onClick={handleLogin}>
-                Login
-              </Button>
+              <div className="d-flex justify-content-center align-items-center">
+                <Button variant="primary" onClick={handleLogin}>
+                  Login
+                </Button>
+                <div style={{ margin: "5px" }}>
+                  <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Sign In with Google"
+                    onSuccess={handleGoogleLoginSuccess}
+                    onFailure={handleGoogleLoginFailure}
+                    cookiePolicy={"single_host_origin"}
+                    autoLoad={false}
+                    className="btn-primary custom-btn"
+                  />
+                </div>
+              </div>
             </>
           )}
         </Form>
