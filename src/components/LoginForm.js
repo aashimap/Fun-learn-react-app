@@ -22,6 +22,7 @@ const LoginForm = (props) => {
   const authToken = localStorage.getItem("authToken");
 
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const scopes = "https://www.googleapis.com/auth/userinfo.email";
 
   const handleLogin = () => {
     const userData = {
@@ -49,7 +50,11 @@ const LoginForm = (props) => {
   };
 
   gapi.load("client:auth2", () => {
-    gapi.client.init({ clientId: { clientId }, plugin_name: "chat" });
+    gapi.client.init({
+      clientId: clientId,
+      scope: scopes,
+      plugin_name: "chat",
+    });
   });
 
   useEffect(() => {

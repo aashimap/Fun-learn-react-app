@@ -50,7 +50,7 @@ const Activities = () => {
       try {
         if (authToken) {
           const response = await fetch(
-            //" http://localhost:8080/activities/fetch",
+            //"http://localhost:8080/activities/fetch",
             "https://fun-learn-node.onrender.com/activities/fetch",
             {
               method: "GET",
