@@ -8,6 +8,7 @@ function Redirect() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("redirecting");
     const fetchData = async () => {
       try {
         const response = await fetch(
