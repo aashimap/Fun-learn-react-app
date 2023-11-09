@@ -19,8 +19,8 @@ function Redirect() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          //"https://fun-learn-node.onrender.com/googleUser",
-          "http://localhost:8080/googleUser",
+          "https://fun-learn-node.onrender.com/googleUser",
+          //"http://localhost:8080/googleUser",
           {
             headers: {
               Authorization: `Bearer ${token}`,

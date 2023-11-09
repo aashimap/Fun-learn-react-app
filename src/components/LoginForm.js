@@ -30,10 +30,10 @@ const LoginForm = (props) => {
 
   const handleGoogleLogin = () => {
     window.open(
-      //"https://fun-learn-node.onrender.com/auth/google",
-      // "_self"
-      "http://localhost:8080/auth/google",
+      "https://fun-learn-node.onrender.com/auth/google",
       "_self"
+      //"http://localhost:8080/auth/google",
+      //"_self"
     );
   };
 

@@ -54,8 +54,8 @@ export const signUp = (userData) => async (dispatch) => {
     dispatch(loginStart());
 
     const response = await fetch(
-      "http://localhost:8080/signup",
-      //"https://fun-learn-node.onrender.com/signup",
+      //"http://localhost:8080/signup",
+      "https://fun-learn-node.onrender.com/signup",
       {
         method: "POST",
         headers: {
@@ -84,8 +84,8 @@ export const signIn = (userData) => async (dispatch) => {
     dispatch(loginStart());
 
     const response = await fetch(
-      "http://localhost:8080/signin",
-      //"https://fun-learn-node.onrender.com/signin",
+      //"http://localhost:8080/signin",
+      "https://fun-learn-node.onrender.com/signin",
       {
         method: "POST",
         headers: {
