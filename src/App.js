@@ -9,11 +9,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route exact path="/redirect" element={<Redirect />} />
         <Route
           path="/activities"
           element={<ProtectedRoute element={<Activities />} />}
         />
-        <Route path="/redirect" element={<Redirect />} />
+
         <Route path="/" element={<Home />} />
       </Routes>
     </BrowserRouter>

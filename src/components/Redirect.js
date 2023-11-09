@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { loginSuccess, setAuthToken, loginFailure } from "../store/userSlice";
 
 function Redirect() {
+  // const [searchParams] = useSearchParams();
+  // console.log("searchParams :", searchParams.get("token"));
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -11,17 +13,21 @@ function Redirect() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const token = params.get("token");
+    console.log("token 1", token);
     console.log("redirecting");
 
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "https://fun-learn-node.onrender.com/googleUser",
-          //http://localhost:8080/googleUser",
+          //"https://fun-learn-node.onrender.com/googleUser",
+          "http://localhost:8080/googleUser",
           {
             headers: {
               Authorization: `Bearer ${token}`,
+              "Access-Control-Allow-Origin": "*",
+              "cache-control": "no-cache",
             },
+            credentials: "include",
           }
         );
         if (!response.ok) {
