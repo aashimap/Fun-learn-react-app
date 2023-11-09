@@ -29,7 +29,10 @@ const LoginForm = (props) => {
   };
 
   const handleGoogleLogin = () => {
-    window.open("http://localhost:8080/auth/google", "_self");
+    window.open(
+      "https://fun-learn-node.onrender.com/auth/google",
+      "_self" /*http://localhost:8080/auth/google", "_self"*/
+    );
   };
 
   const handleCancel = () => {

@@ -15,11 +15,15 @@ function Redirect() {
 
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:8080/googleUser", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "https://fun-learn-node.onrender.com/googleUser",
+          //http://localhost:8080/googleUser",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }

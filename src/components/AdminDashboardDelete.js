@@ -13,8 +13,8 @@ const AdminDashboardDelete = (props) => {
       }
 
       const response = await fetch(
-        "http://localhost:8080/activities/delete",
-        //"https://fun-learn-node.onrender.com/activities/delete",
+        //"http://localhost:8080/activities/delete",
+        "https://fun-learn-node.onrender.com/activities/delete",
         {
           method: "DELETE",
           credentials: "include",
