@@ -35,8 +35,9 @@ const Activities = () => {
 
   useEffect(() => {
     const checkSessionExpiration = () => {
+      //if (decodedToken !== null && decodedToken !== undefined)
       if (authToken !== null) {
-        const expirationTime = decodedToken.exp * 1000;
+        const expirationTime = decodedToken.exp * 10000;
         console.log(expirationTime);
 
         if (Date.now() > expirationTime) {
@@ -50,8 +51,8 @@ const Activities = () => {
       try {
         if (authToken) {
           const response = await fetch(
-            //"http://localhost:8080/activities/fetch",
-            "https://fun-learn-node.onrender.com/activities/fetch",
+            "http://localhost:8080/activities/fetch",
+            //"https://fun-learn-node.onrender.com/activities/fetch",
             {
               method: "GET",
               headers: {
@@ -84,7 +85,7 @@ const Activities = () => {
       const userRole = decodedToken.role;
       setIsAdmin(userRole === "admin");
 
-      const intervalId = setInterval(checkSessionExpiration, 30000);
+      const intervalId = setInterval(checkSessionExpiration, 300000);
       return () => clearInterval(intervalId);
     } else {
       navigate("/");

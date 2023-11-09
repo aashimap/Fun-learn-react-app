@@ -1,31 +1,33 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loginSuccess, setAuthToken, loginFailure } from "../store/userSlice";
 
 function Redirect() {
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
     console.log("redirecting");
+
     const fetchData = async () => {
       try {
-        const response = await fetch(
-          "https://fun-learn-node.onrender.com/googleUser",
-          {
-            method: "GET",
-          }
-        );
-
+        const response = await fetch("http://localhost:8080/googleUser", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
-          throw new Error("Failed to fetch google user data");
+          throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
 
         const googleUser = await response.json();
-
-        dispatch(loginSuccess(googleUser));
-        dispatch(setAuthToken(googleUser.accessToken));
+        console.log("Google User Data:", googleUser);
+        dispatch(setAuthToken(googleUser.user.accessToken));
+        dispatch(loginSuccess(googleUser.user));
         navigate("/activities");
       } catch (error) {
         console.error("Error handling redirect:", error);
@@ -34,7 +36,7 @@ function Redirect() {
     };
 
     fetchData();
-  }, [dispatch, navigate]);
+  }, [dispatch, navigate, location]);
 
   return <div>Redirect</div>;
 }

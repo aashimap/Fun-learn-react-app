@@ -14,6 +14,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     resetState: (state) => {
+      state.error = null;
       state = initialState;
     },
 
@@ -53,8 +54,8 @@ export const signUp = (userData) => async (dispatch) => {
     dispatch(loginStart());
 
     const response = await fetch(
-      //"http://localhost:8080/signup",
-      "https://fun-learn-node.onrender.com/signup",
+      "http://localhost:8080/signup",
+      //"https://fun-learn-node.onrender.com/signup",
       {
         method: "POST",
         headers: {
@@ -83,8 +84,8 @@ export const signIn = (userData) => async (dispatch) => {
     dispatch(loginStart());
 
     const response = await fetch(
-      //"http://localhost:8080/signin",
-      "https://fun-learn-node.onrender.com/signin",
+      "http://localhost:8080/signin",
+      //"https://fun-learn-node.onrender.com/signin",
       {
         method: "POST",
         headers: {
@@ -110,35 +111,37 @@ export const signIn = (userData) => async (dispatch) => {
 };
 
 // Client-side actions
-export const googleSignIn = () => async (dispatch) => {
-  console.log("Dispatched googleSignIn");
-  try {
-    // Open Google Sign-In popup
-    await new Promise((resolve, reject) => {
-      const googleSignInPopup = window.open(
-        //"http://localhost:8080/auth/google",
-        "https://fun-learn-node.onrender.com/auth/google",
-        "GoogleSignIn",
-        "width=600,height=600"
-      );
+// export const googleSignIn = () => async (dispatch) => {
+//   console.log("Dispatched googleSignIn");
+//   try {
+//     // Open Google Sign-In popup
+//     const googleSignInPopup = window.open(
+//       "http://localhost:8080/auth/google",
+//       "GoogleSignIn",
+//       "width=600,height=600"
+//     );
 
-      const checkPopupClosed = setInterval(() => {
-        if (googleSignInPopup.closed) {
-          clearInterval(checkPopupClosed);
-          reject({ error: "popup_closed_by_user" });
-        }
-      }, 500);
+//     const result = await new Promise((resolve, reject) => {
+//       const checkPopupClosed = setInterval(() => {
+//         if (googleSignInPopup.closed) {
+//           clearInterval(checkPopupClosed);
+//           reject({ error: "popup_closed_by_user" });
+//         }
+//       }, 500);
 
-      window.addEventListener("message", (event) => {
-        if (event.origin === window.location.origin) {
-          resolve(event.data);
-        }
-      });
-    });
-  } catch (error) {
-    console.error("Google Sign-In error:", error);
-  }
-};
+//       window.addEventListener("message", (event) => {
+//         if (event.origin === window.location.origin) {
+//           resolve(event.data);
+//         }
+//       });
+//     });
+
+//     // Handle the result (user data or error) here
+//     console.log("Google Sign-In Result:", result);
+//   } catch (error) {
+//     console.error("Google Sign-In error:", error);
+//   }
+// };
 
 export const {
   loading,

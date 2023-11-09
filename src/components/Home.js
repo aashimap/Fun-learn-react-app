@@ -4,9 +4,10 @@ import LoginForm from "./LoginForm";
 import CreateAccount from "./CreateAccount";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
 const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isLoginFormShown, setIsLoginFormShown] = useState(false);
   const [isCreateAccountShown, setIsCreateAccountShown] = useState(false);
   const authToken = localStorage.getItem("authToken");
@@ -25,7 +26,7 @@ const Home = () => {
     } else {
       navigate("/");
     }
-  }, [navigate, authToken]);
+  }, [navigate, authToken, dispatch]);
 
   return (
     <>
