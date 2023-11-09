@@ -15,6 +15,8 @@ const userSlice = createSlice({
   reducers: {
     resetState: (state) => {
       state.error = null;
+      state.user = null;
+      state.authToken = null;
       state = initialState;
     },
 
